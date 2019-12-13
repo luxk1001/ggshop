@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script type="text/javascript">
+    window.onload = function(){
+        var i = 5;
+        var timer = setInterval(function(){
+            if(i == 0){
+                location.href="/login";
+            }else{
+                document.getElementById("t_s").innerHTML = "您已成功激活！"+i+"秒后自动跳转。。。。";
+                --i;
+            }
+        },1000);
+    }
+</script>
+<body>
+    <span id="t_s"></span>
+</body>
+</html>

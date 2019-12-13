@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pipilu.ggshop.dao.UserDao">
+
+    <cache type="com.pipilu.ggshop.redis.MybatisRedisCache" />
+
+    <resultMap type="com.pipilu.ggshop.bean.User" id="User">
+        <!--
+            column:查出来的列名
+            property:对应pojo的属性名
+         -->
+        <id column="id" property="id" />
+        <result column="username" property="username" />
+        <result column="userpwd" property="userpwd" />
+        <result column="telephone" property="telephone" />
+        <result column="role" property="role" />
+        <result column="email" property="email" />
+        <result column="para1" property="para1" />
+        <result column="para2" property="para2" />
+        <result column="para3" property="para3" />
+    </resultMap>
+
+    <!-- resultType中的User为mybatis-config.xml中定义的别名 -->
+    <select id="selectUserById" parameterType="int" resultType="User">
+        select * from user
+        <!-- 可以自动去掉第一个and -->
+        <where>
+            <!--当传入数据只有一个时mybatis中<if>判断会出现判断条件里不管你传什么参，只能用_parameter 代替-->
+            <if test="_parameter!=null">
+                and id = #{_parameter}
+            </if>
+        </where>
+    </select>
+
+    <select id="varLogin" parameterType="User" resultType="int">
+        select count(*) from user where user.username = #{username} and user.userpwd = #{userpwd}
+    </select>
+
+    <select id="selectUserAll" resultType="User">
+        select * from user
+    </select>
+</mapper>
