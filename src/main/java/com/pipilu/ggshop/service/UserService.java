@@ -6,4 +6,8 @@ import java.util.List;
 
 public interface UserService {
     List<User> selectUserAll();
+
+    void insertUser(User user);
+
+    void updateUserPara1(String username);
 }

@@ -41,4 +41,13 @@
     <select id="selectUserAll" resultType="User">
         select * from user
     </select>
+
+    <insert id="insertUser" parameterType="User">
+        insert into user (username,userpwd,role,email,para1) values
+            (#{username},#{userpwd},#{role},#{email},#{para1});
+    </insert>
+
+    <update id="updateUserPara1" parameterType="String">
+        update user set para1 = '1' where username = #{username}
+    </update>
 </mapper>

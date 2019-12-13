@@ -8,4 +8,8 @@ import java.util.List;
 @Mapper
 public interface UserDao {
     List<User> selectUserAll();
+
+    void insertUser(User user);
+
+    void updateUserPara1(String username);
 }

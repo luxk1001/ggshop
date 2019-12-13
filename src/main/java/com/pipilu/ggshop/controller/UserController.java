@@ -30,19 +30,23 @@ public class UserController {
     @RequestMapping(value = "/myajaxRegister",method = RequestMethod.POST)
     @ResponseBody
     public String sendEmail(User user,String email){
-        System.out.println(user);
-        System.out.println(email);
+        final boolean[] b = {false};
         new Thread(){
             @Override
             public void run(){
                 try {
-                    emailService.sendSimpleMail(email);
+                    b[0] = emailService.sendSimpleMail(email, user);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }.start();
-        return "邮件已发送至您的邮箱，请激活";
+        if(b[0]){
+            return "邮件已发送至您的邮箱，请激活";
+        }
+        else{
+            return "注册失败";
+        }
     }
 
     @RequestMapping(value = "/activateMail")
@@ -50,6 +54,6 @@ public class UserController {
         if(emailService.balanceToken(emailToken)){
             return "success";
         }
-        return "login";
+        return "error";
     }
 }
